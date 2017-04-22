@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skapps.retrofittutorial.resources.ListViewAdapter;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -368,6 +371,84 @@ public class SyncData {
 
     }
 
+
+    public void getData( String id ){
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("id", id ); // Params will be required.. you can add multiple values as per needed
+
+        RetrofitWebService api = RetrofitInitilizer();
+
+        api.get_data(
+
+                params,
+                new Callback<Response>() {
+                    @Override
+                    public void success(Response result, Response response) {
+
+
+                        BufferedReader reader = null;
+
+                        String output = "";
+
+                        try {
+                            reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+
+                            output = reader.readLine();
+
+                            Log.d("Prof",output+"--- output" );
+
+                            JSONObject json  = new JSONObject(output);
+
+                            Log.d("Prof",json.toString()+"---");
+
+
+                            Toast.makeText( ctx , "Values\n"+json.toString(), Toast.LENGTH_SHORT).show();
+/*
+                            ldr.HideLoader();
+*/
+
+                            /*HistoryTxt.setText( json.getString("History") );
+
+                            Picasso.with(ctx).load( json.getString("ImgUrl") ).into(BannerImg);
+*/
+
+                        } catch (IOException e) {
+
+/*
+                            ldr.HideLoader();
+*/
+
+                            Log.d("Prof","Excep "+e.toString());
+                            Toast.makeText(ctx, "I/O Exception\n"+e.toString(), Toast.LENGTH_SHORT).show();
+
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+/*
+                            ldr.HideLoader();
+*/
+
+                            Log.d("Prof","Excep JSOn "+e.toString());
+                            Toast.makeText(ctx, "Json Exception\n"+e.toString(), Toast.LENGTH_SHORT).show();
+
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        /*ldr.HideLoader();*/
+
+                        Toast.makeText(ctx, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+
+                }
+        );
+
+
+    }
 
 
 

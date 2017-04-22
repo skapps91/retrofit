@@ -1,10 +1,14 @@
 package com.skapps.retrofittutorial.resources.retrofit;
 
+import java.util.Map;
+
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.QueryMap;
 
 
 public interface RetrofitWebService {
@@ -35,5 +39,12 @@ public interface RetrofitWebService {
     public void delete(
             @Field("id") String id,
             Callback<Response> callback);
+
+    @GET("/get_data.php")
+    public void get_data(
+            @QueryMap Map<String, String> params,
+            Callback<Response> callback);
+
+
 
 }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.skapps.retrofittutorial.resources.retrofit.SyncData;
+
 public class MainActivity extends AppCompatActivity {
 
     Button insertBtn, ViewBtn;
@@ -17,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
         insertBtn = (Button) findViewById(R.id.insertBtn);
         ViewBtn = (Button) findViewById(R.id.ViewBtn);
+
+        SyncData sync = new SyncData( MainActivity.this );
+
+        sync.getData( "6" );
 
         insertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
